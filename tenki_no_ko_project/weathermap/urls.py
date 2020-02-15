@@ -2,5 +2,6 @@ from django.urls import path, include
 from . import views
 
 urlpatterns = [
-    path('', views.request_to_weather),
+    path('keyboard', views.keyboard),
+    path('message',views.message),
 ]

@@ -1,8 +1,7 @@
-from django.shortcuts import render
-from django.http import HttpResponse
 import urllib.request
 import json
 from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse, HttpResponse, HttpRequest
 
 # Create your views here.
 
@@ -15,14 +14,32 @@ def request(url) :
     return text_data
 
 def build_url(city) :
-    return f'api.openweathermap.org/data/2.5/weather?q={city}&appid={TOKEN}'
+    return f'http://api.openweathermap.org/data/2.5/weather?q={city}&appid={TOKEN}'
 
-@csrf_exempt
-def request_to_weather(request) :
-    json_str = ((request.body).decode('utf-8'))
-    received_json_data = json.loads(json_str)
-    userMessage = received_json_data['content'] 
-
-    url = build_url(userMessage)
+def request_to_weather(req) :
+    url = build_url(req)
     response = request(url)
     return json.loads(response)
+
+def keyboard(request):
+ 
+        return JsonResponse({
+                'type' : 'buttons',
+                'buttons' : ['1','2']
+                })
+
+@csrf_exempt
+def message(request):
+        message = ((request.body).decode('utf-8'))
+        return_json_str = json.loads(message)
+        return_str = return_json_str['content']
+ 
+        return JsonResponse({
+                'message': {
+                        'text': "you type "+return_str+"!"
+                },
+                'keyboard': {
+                        'type': 'buttons',
+                        'buttons': ['1','2']
+                }
+        })
