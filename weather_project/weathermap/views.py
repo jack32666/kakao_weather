@@ -5,7 +5,7 @@ from django.http import JsonResponse, HttpResponse
 
 # Create your views here.
 
-TOKEN = '사용자의 API KEY '  ## 보안 문제 때문에 쓰지 않았습니다
+TOKEN = '사용자의 API KEY '  ## 보안 문제 상 쓰지 않았습니다
 
 def request_data(url) :
     response = urllib.request.urlopen(url)
